@@ -6,7 +6,11 @@ let {connection} = require("./db")
 require('dotenv').config()
 
 app.use(express.json())
-
+app.get("/",(req,res)=>{
+    
+    res.send({msg:"Welcome"})
+    
+})
 app.use('/user',UserRouter)
 
 app.use('/product',productRoutes)

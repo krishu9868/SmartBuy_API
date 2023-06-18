@@ -1,7 +1,7 @@
 const express = require("express");
 // const jwt = require("jsonwebtoken");
 // const bcrypt = require("bcrypt");
-let {authenticate,UserAuthenticate} = require('../Middleware/authentication')
+let {UserAuthenticate} = require('../Middleware/authentication')
 
 const productRoutes = express.Router();
 
@@ -15,7 +15,7 @@ productRoutes.get("/test", async(req,res)=>{
 })
 
 productRoutes.get("/user",UserAuthenticate,async (req, res) => {
-    try {
+    try {                                 //token
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 8;
         const skipIndex = (page-1) * limit;
@@ -56,8 +56,8 @@ productRoutes.get("/user",UserAuthenticate,async (req, res) => {
 productRoutes.get("/",async (req, res) => {
     console.log(req.query)
     try {
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 8;
+        const page = parseInt(req.query.page) 
+        const limit = parseInt(req.query.limit) ;
         const skipIndex = (page-1) * limit;
         const sort = req.query.sortBy || '_id';
         const sortOrder = req.query.sortOrder || 'desc';
@@ -94,7 +94,7 @@ productRoutes.get("/",async (req, res) => {
 })
 
 // get product by id
-productRoutes.get("/:id", authenticate,async (req, res) => {
+productRoutes.get("/:id",async (req, res) => {
     product = await ProductModel.findById({ _id: req.params.id })
     if(product){
         res.send(product);
@@ -106,7 +106,7 @@ productRoutes.get("/:id", authenticate,async (req, res) => {
 })
 
 
-productRoutes.post("/add",authenticate, async (req, res) => {
+productRoutes.post("/add", async (req, res) => {
     const { title, gender, category, brand, rating, review, price, image, available, item_left } = req.body;
     try {
         product = ProductModel(req.body)
@@ -121,7 +121,7 @@ productRoutes.post("/add",authenticate, async (req, res) => {
 })
 
 
-productRoutes.delete('/delete',authenticate,async(req,res)=>{
+productRoutes.delete('/delete',async(req,res)=>{
 
     let Id = req.query._id
 

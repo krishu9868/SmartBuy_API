@@ -3,14 +3,12 @@ let app = express()
 let {UserRouter} = require("./Routers/user.router")
 let {productRoutes} = require('./Routers/product.router')
 let {connection} = require("./db")
+let cors = require('cors')
 require('dotenv').config()
 
 app.use(express.json())
-app.get("/",(req,res)=>{
-    
-    res.send({msg:"Welcome"})
-    
-})
+app.use(cors())
+
 app.use('/user',UserRouter)
 
 app.use('/product',productRoutes)

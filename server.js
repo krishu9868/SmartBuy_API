@@ -5,9 +5,9 @@ let {productRoutes} = require('./Routers/product.router')
 let {connection} = require("./db")
 let cors = require('cors')
 require('dotenv').config()
-
-app.use(express.json())
 app.use(cors())
+app.use(express.json())
+
 
 app.use('/user',UserRouter)
 

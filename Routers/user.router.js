@@ -26,7 +26,7 @@ UserRouter.get('/auth/google/callback',
           // console.log(await UserModel.find({email:req.user.email}))
           if(data.length>0){
 
-            let token = JWT.sign({email:req.user.email},process.env.privateKey)
+            let token = JWT.sign({role:data[0].role},process.env.privateKey)
             await redis.set(req.user.email,token)
 
             res.send({msg:"login Success"})

@@ -49,6 +49,7 @@ productRoutes.get("/user", UserAuthenticate,async (req, res) => {
 })
 
 productRoutes.get("/", authenticate,async (req, res) => {
+    console.log(req.query)
     try {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 8;

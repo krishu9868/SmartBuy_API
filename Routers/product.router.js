@@ -14,7 +14,7 @@ productRoutes.get("/test", async(req,res)=>{
 
 })
 
-productRoutes.get("/user", UserAuthenticate,async (req, res) => {
+productRoutes.get("/user",UserAuthenticate,async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 8;
@@ -53,7 +53,7 @@ productRoutes.get("/user", UserAuthenticate,async (req, res) => {
     }
 })
 
-productRoutes.get("/", authenticate,async (req, res) => {
+productRoutes.get("/",async (req, res) => {
     console.log(req.query)
     try {
         const page = parseInt(req.query.page) || 1;
@@ -106,7 +106,7 @@ productRoutes.get("/:id", authenticate,async (req, res) => {
 })
 
 
-productRoutes.post("/add", authenticate, async (req, res) => {
+productRoutes.post("/add",authenticate, async (req, res) => {
     const { title, gender, category, brand, rating, review, price, image, available, item_left } = req.body;
     try {
         product = ProductModel(req.body)

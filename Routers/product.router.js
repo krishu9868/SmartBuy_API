@@ -8,6 +8,11 @@ const productRoutes = express.Router();
 const { ProductModel } = require("../Models/product.model");
 
 //  search and sort functionality 
+productRoutes.get("/test", async(req,res)=>{
+ let data = await ProductModel.find(req.query)
+ res.send(data)
+
+})
 
 productRoutes.get("/user", UserAuthenticate,async (req, res) => {
     try {
@@ -125,6 +130,8 @@ productRoutes.delete('/delete',authenticate,async(req,res)=>{
   res.send({msg:"Product deleted"})
 
 })
+
+
 
 
 

@@ -19,8 +19,8 @@ productRoutes.get("/test", async(req,res)=>{
 productRoutes.get("/",async (req, res) => {
     console.log(req.query)
     try {
-        const page = parseInt(req.query.page) 
-        const limit = parseInt(req.query.limit) ;
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 7 ;
         const skipIndex = (page-1) * limit;
         const sort = req.query.sortBy || '_id';
         const sortOrder = req.query.sortOrder || 'desc';

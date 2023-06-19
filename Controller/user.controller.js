@@ -176,7 +176,7 @@ let login = async (req, res) => {
 
                     await redis.set(email, token,)
 
-                    res.send({ accessToken:token })
+                    res.send({ accesstoken:token })
 
                 }
             })

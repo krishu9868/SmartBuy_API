@@ -8,7 +8,7 @@ const productRoutes = express.Router();
 const { ProductModel } = require("../Models/product.model");
 
 //  search and sort functionality 
-productRoutes.get("/test", async(req,res)=>{
+productRoutes.get("/admin", async(req,res)=>{
  let data = await ProductModel.find(req.query)
  res.send(data)
 
@@ -88,7 +88,7 @@ productRoutes.delete('/delete',adminAuthenticate,async(req,res)=>{
 
     let Id = req.query._id
 
-  await  ProductModel.deleteById({_id:Id})
+   await ProductModel.deleteOne({ _id: Id })
 
   res.send({msg:"Product deleted"})
 

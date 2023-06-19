@@ -5,7 +5,10 @@ let {UserModel} = require('../Models/User.Model')
 let JWT = require('jsonwebtoken')
 const { redis } = require("../redis.db")
 let UserRouter = express.Router()
+let axios = require('axios')
 require('dotenv').config()
+UserRouter.use(passport.initialize());
+//UserRouter.use(passport.session());
 
 ////////////////////login////////////////////////////////////////////
 UserRouter.get('/auth/google',
@@ -29,7 +32,7 @@ UserRouter.get('/auth/google/callback',
             let token = JWT.sign({role:data[0].role},process.env.privateKey)
             await redis.set(req.user.email,token)
 
-            res.send({accesstoken:token})
+            res.send({msg:"login Success"})
 
           }else{
              
@@ -46,12 +49,18 @@ UserRouter.get('/auth/google/callback',
 );
 
 //////////////////////////////////////////////////////////login/////////////////////////////
-
+UserRouter.get('/get',(req,res)=>{
+res.send({msg:"wleo"})
+})
 UserRouter.post('/signup',signup)
 UserRouter.patch("/forgotPassword", forgotPassword)
 UserRouter.delete("/logout",logout)
 UserRouter.post('/login',login)
 
+//api
+
+
+// Start the server
 
 
 

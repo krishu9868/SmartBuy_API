@@ -5,7 +5,7 @@ let {UserModel} = require('../Models/User.Model')
 let JWT = require('jsonwebtoken')
 const { redis } = require("../redis.db")
 let UserRouter = express.Router()
-let axios = require('axios')
+
 require('dotenv').config()
 UserRouter.use(passport.initialize());
 //UserRouter.use(passport.session());

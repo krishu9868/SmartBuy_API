@@ -29,9 +29,12 @@ UserRouter.get('/auth/google/callback',
             let token = JWT.sign({role:data[0].role},process.env.privateKey)
             await redis.set(req.user.email,token)
 
-            res.send({msg:"login Success"})
+            res.send({accesstoken:token})
+
           }else{
+             
             res.status(404).send({msg:"login failed"})
+
           }
 
         }

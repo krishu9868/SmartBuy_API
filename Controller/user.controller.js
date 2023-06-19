@@ -56,7 +56,7 @@ if(req.body.OTP == undefined){
             html:`
             <body style="font-family: Arial, sans-serif; font-size: 20px; color: #000000; background-color: #ffffff;">
               <div>
-                <p>Dear Customer,</p>
+                <p>Dear Customer,/p>
                 <p>I hope this email finds you well. As per your request, please find below your one-time password (OTP) to verify your identity and ensure the security of your account:</p>
                 <p><strong style="color: #ff0000; font-weight: 300;">${generateOtp()}</strong></p>
                 <p>Please note that this OTP is valid for a limited time only, so we advise that you use it as soon as possible. If you have any questions or concerns regarding this OTP, please do not hesitate to contact us.</p>
@@ -120,29 +120,32 @@ if(req.body.OTP == undefined){
 
 let logout = async (req, res) => {
 
-    let { email } = req.body
-    let accessToken = await redis.get(email)
+    let { accessToken } = req.body
+     JWT.verify(accessToken,process.env.privateKey, async(err,result)=>{
     //console.log(accessToken)
-    if (accessToken == null) {
+    if(err){
 
-        res.status(404).send({ msg: "accesstoken is not getting, and also you should've to send email to the backend" })
-    } else {
+        res.status(404).send({ msg:err.message })
 
-        await redis.del(email, (err, result) => {
+    }else{
+    
+    await redis.del(email, (err, result) => {
 
-            if (err) {
+        if (err) {
 
-                res.status(505).send({ msg: "something wrong to deleting of accesstoken in redis" })
+            res.status(505).send({ msg: "something wrong to deleting of accesstoken in redis" })
 
-            } else {
+        } else {
 
-                res.send({ msg: "logout Success" })
+            res.send({ msg: "logout Success" })
 
-            }
-        })
-    }
+        }
+    })
 
+}
+    
 
+    })
 }
 
 
@@ -163,7 +166,7 @@ let login = async (req, res) => {
 
         } else {
 
-            JWT.sign({ email: email }, process.env.privateKey, {expiresIn:"4h"}, async (err, token) => {
+            JWT.sign({ role: data[0].role }, process.env.privateKey, {expiresIn:"4h"}, async (err, token) => {
 
                 if (err) {
 
@@ -173,7 +176,7 @@ let login = async (req, res) => {
 
                     await redis.set(email, token,)
 
-                    res.send({ msg: "login Success" })
+                    res.send({ accessToken:token })
 
                 }
             })
@@ -212,7 +215,7 @@ if(data.length>0)  return res.status(505).send({msg:"you are already registered 
             subject: "One Time Verification(OTP)",
             html: `<body>
             <div style="font-family: Arial, sans-serif; font-size: 20px; color: #000000; background-img:url('https://www.flaticon.com/free-icon/enrollment_2247728');">
-              <p>Dear,Customer</p>
+              <p>Dear Customer,</p>
               <p> I hope this email finds you well. As per your request, please find below your one-time password (OTP) to verify your identity and ensure the security of your account:</p>
               <p> <strong style="color: #ff0000; font-weight:300">${generateOtp()}</strong></p>
               <p>Please note that this OTP is valid for a limited time only, so we advise that you use it as soon as possible. If you have any questions or concerns regarding this OTP, please do not hesitate to contact us.</p>

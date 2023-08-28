@@ -196,7 +196,7 @@ let signup = async (req,res)=>{
 
     let data = await UserModel.find({email:email})
     
-//console.log(data)
+console.log(data)
 if(data.length>0)  return res.status(505).send({msg:"you are already registered on this webiste"})
 
     bcrypt.hash(password,8, async(err,hash)=>{

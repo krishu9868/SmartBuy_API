@@ -122,7 +122,7 @@ let logout = async (req, res) => {
 
     let { accessToken } = req.body
      JWT.verify(accessToken,process.env.privateKey, async(err,result)=>{
-    //console.log(accessToken)
+    console.log(accessToken)
     if(err){
   console.log(email);
         res.status(200).send({ msg:err.message })

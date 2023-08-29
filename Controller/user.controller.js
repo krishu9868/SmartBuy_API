@@ -124,11 +124,11 @@ let logout = async (req, res) => {
      JWT.verify(accessToken,process.env.privateKey, async(err,result)=>{
     //console.log(accessToken)
     if(err){
-
-        res.status(404).send({ msg:err.message })
+  console.log(email);
+        res.status(200).send({ msg:err.message })
 
     }else{
-    console.log(email);
+  
     await redis.del(email, (err, result) => {
 
         if (err) {

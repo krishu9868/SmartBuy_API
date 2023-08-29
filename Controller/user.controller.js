@@ -128,7 +128,7 @@ let logout = async (req, res) => {
         res.status(404).send({ msg:err.message })
 
     }else{
-    
+    console.log(email);
     await redis.del(email, (err, result) => {
 
         if (err) {

@@ -133,7 +133,7 @@ let logout = async (req, res) => {
 
         if (err) {
 
-            res.status(505).send({ msg: "something wrong to deleting of accesstoken in redis" })
+            res.status(404).send({ msg: "something wrong to deleting of accesstoken in redis" })
 
         } else {
 
